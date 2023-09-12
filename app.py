@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 import requests, json
-from keys import url, bedrock_apikey
+from keys import url
 
 # Define the Streamlit app
 def main():
@@ -17,36 +17,42 @@ def main():
     st.title("Flinstones Portal")
     st.write("Welcome to the Flinstones 'RAG' Portal. This page allows you to interact with AHEAD's document corpus AND Bedrock LLMs!")
 
-    # Create an input box for text
-    user_input = st.text_input("Enter your LLM query here:")
+
+    # input text box for the api key
+    api_key_input = st.text_input("Enter your user API key for project flinstone:")
+
+    if api_key_input:
+
+        # Create an input box for text
+        user_input = st.text_input("Enter your LLM query here:")
 
 
-    if user_input:
-        query = user_input
+        if user_input:
+            query = user_input
 
-        # Define the JSON data you want to send
-        data = {
-            "body": query
-        }
+            # Define the JSON data you want to send
+            data = {
+                "body": query
+            }
 
-        # Set the headers to indicate that you are sending JSON data
-        headers = {
-            'Content-Type': 'application/json',
-            'x-api-key': bedrock_apikey
-        }
+            # Set the headers to indicate that you are sending JSON data
+            headers = {
+                'Content-Type': 'application/json',
+                'x-api-key': api_key_input
+            }
 
-        # Send the POST request
-        response = requests.post(url, data=json.dumps(data), headers=headers)
+            # Send the POST request
+            response = requests.post(url, data=json.dumps(data), headers=headers)
 
-        # Handle the response
-        if response.status_code == 200:
-            st.write("Request was successful!")
-            st.write("Response:", response.text)
-            #st.json(response.json())  # Display response JSON data
-        else:
-            st.write("Request failed with status code:", response.status_code)
-            st.write("Response:", response.text)
-            #st.json(response.json())  # Display response JSON data
+            # Handle the response
+            if response.status_code == 200:
+                st.write("Request was successful!")
+                st.write("Response:", response.text)
+                #st.json(response.json())  # Display response JSON data
+            else:
+                st.write("Request failed with status code:", response.status_code)
+                st.write("Response:", response.text)
+                #st.json(response.json())  # Display response JSON data
 
 
 if __name__ == "__main__":
