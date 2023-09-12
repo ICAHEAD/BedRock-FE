@@ -1,7 +1,9 @@
 import streamlit as st
 import pandas as pd
 import requests, json
-from keys import url
+# from keys import url
+
+url = bedrock_url
 
 # Define the Streamlit app
 def main():
