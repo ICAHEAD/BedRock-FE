@@ -12,11 +12,11 @@ def main():
         layout="wide",
     )
     # Display the logo at the top
-    st.image("header.png", use_column_width=True)
+    st.image("new_header.PNG", use_column_width=True)
 
     # Add a title and description
     st.title("Flinstones Portal")
-    st.write("Welcome to the Flinstones 'RAG' Portal. This page allows you to interact with AHEAD's document corpus AND Bedrock LLMs!")
+    st.write("Welcome to the Project Flinstone 'RAG' portal. This page allows you to interact with AHEAD's document corpus AND AWS Bedrock LLMs!")
 
 
     # input text box for the api key
@@ -48,8 +48,13 @@ def main():
             # Handle the response
             if response.status_code == 200:
                 st.write("Request was successful!")
-                st.write("Response:", response.text)
-                #st.json(response.json())  # Display response JSON data
+                #st.write("Response:", response.text)
+                whammy = response.json()
+                #formatted_body = body.replace("\\n", "\n")
+                st.write(whammy.get("body", "").replace("\\n", "\n").replace("$", " $").replace("<text>", "\n").replace(".", ". ").replace("\\u", "'"))
+                st.divider() 
+                st.write("Full JSON response:")
+                st.json(response.json())  # Display response JSON data
             else:
                 st.write("Request failed with status code:", response.status_code)
                 st.write("Response:", response.text)
