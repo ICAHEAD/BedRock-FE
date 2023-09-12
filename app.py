@@ -2,7 +2,7 @@ import streamlit as st
 import requests, json
 # from keys import url
 
-url = bedrock_url
+url = st.secrets["bedrock_url"]
 
 # Define the Streamlit app
 def main():
